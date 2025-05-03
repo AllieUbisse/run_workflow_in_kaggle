@@ -19,7 +19,7 @@ jobs:
         with:
           username: ${{ secrets.KAGGLE_USERNAME }}
           key: ${{ secrets.KAGGLE_KEY }}
-          title: "Run Unit Tests v2"
+          title: "Run Unit Tests Public run"
           custom_script: |
                 pytest test.py
 
