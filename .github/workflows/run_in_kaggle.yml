@@ -8,7 +8,8 @@ on:
 jobs:
   run_unit_tests:
     runs-on: ubuntu-latest
-
+    timeout-minutes: 3 # Stop work flow after x minnutes, the job will continue to run in kaggle
+    
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
