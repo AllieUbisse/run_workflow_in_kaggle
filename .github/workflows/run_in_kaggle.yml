@@ -1,0 +1,27 @@
+name: Run Tests on Pull Request
+
+on:
+  pull_request:
+    branches: [ train_model ]
+  workflow_dispatch:
+
+jobs:
+  run_unit_tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Execute Kaggle Script Action
+        uses: KevKibe/kaggle-script-action@v1.0.5
+        with:
+          username: ${{ secrets.KAGGLE_USERNAME }}
+          key: ${{ secrets.KAGGLE_KEY }}
+          title: "Run Unit Tests"
+          custom_script: |
+                pytest test.py
+          enable_internet: true
+          enable_gpu: false
+          enable_tpu: false
+          sleep_time: 10
