@@ -1,0 +1,22 @@
+name: Auto Time-Out Workflow
+
+on: 
+  workflow_dispatch  # Allows manual execution
+
+jobs:
+  example_job:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1  # Set timeout for the job (Stops after 10 minutes)
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Simulated Long Process
+        run: |
+          echo "Starting a process..."
+          sleep 600  # Simulates a long-running task (10 minutes)
+          echo "This won't execute if timeout occurs"
+
+      - name: Completion Message
+        run: echo "Job completed (unless timed out)."
