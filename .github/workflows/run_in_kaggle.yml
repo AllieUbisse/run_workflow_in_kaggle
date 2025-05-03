@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  run_unit_tests_v2:
+  run_unit_tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,7 +18,7 @@ jobs:
         with:
           username: ${{ secrets.KAGGLE_USERNAME }}
           key: ${{ secrets.KAGGLE_KEY }}
-          title: "Run Unit Tests"
+          title: "Run Unit Tests v2"
           custom_script: |
                 pytest test.py
 
