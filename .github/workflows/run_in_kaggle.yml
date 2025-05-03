@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  run_unit_tests:
+  run_unit_tests_v2:
     runs-on: ubuntu-latest
 
     steps:
