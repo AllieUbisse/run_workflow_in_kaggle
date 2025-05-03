@@ -8,7 +8,7 @@ on:
 jobs:
   run_unit_tests:
     runs-on: ubuntu-latest
-    timeout-minutes: 3 # Stop work flow after x minnutes, the job will continue to run in kaggle
+    #timeout-minutes: 3 # Stop work flow after x minutes, the job will continue to run in kaggle
     
     steps:
       - name: Checkout Repository
@@ -19,7 +19,7 @@ jobs:
         with:
           username: ${{ secrets.KAGGLE_USERNAME }}
           key: ${{ secrets.KAGGLE_KEY }}
-          title: "Run Unit Tests Public run"
+          title: "Run Unit Tests Public run - no timeout"
           custom_script: |
                 pytest test.py
 
