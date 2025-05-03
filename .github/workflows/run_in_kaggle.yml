@@ -21,7 +21,11 @@ jobs:
           title: "Run Unit Tests"
           custom_script: |
                 pytest test.py
+
           enable_internet: true
           enable_gpu: false
           enable_tpu: false
           sleep_time: 10
+      - name: Stop workflow if tests succeed or fail
+        if: always()  # Ensures this runs regardless of success or failure
+        run: exit 0   # stop workflow
