@@ -1,1 +1,12 @@
 
+{
+  "id": "your_username/my-kaggle-kernel",
+  "title": "My Auto-Run Kernel",
+  "code_file": "main.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": ["your_username/my-kaggle-dataset"]
+}
