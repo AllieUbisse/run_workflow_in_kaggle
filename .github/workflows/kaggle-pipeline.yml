@@ -33,7 +33,7 @@ jobs:
     - name: Push Notebook
       run: |
         cd project
-        kaggle kernels push --quiet
+        kaggle kernels push 
 
     - name: Trigger Notebook Run
       run: |
