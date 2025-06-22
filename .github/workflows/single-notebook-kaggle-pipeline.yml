@@ -63,5 +63,12 @@ jobs:
           kaggle kernels push 
           kaggle kernels output "$KERNEL_ID"
 
+          while true; do
+             STATUS=$(kaggle kernels status "$KERNEL_ID" | grep -i status | awk '{print tolower($2)}')
+             echo "⏳ Kernel status: $STATUS"
+             if [[ "$STATUS" == "complete" ]]; then break; fi
+             sleep 30
+done
+
           cd - > /dev/null
         done
