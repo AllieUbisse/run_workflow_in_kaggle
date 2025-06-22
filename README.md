@@ -6,6 +6,10 @@
 <br>
 ![image](https://github.com/user-attachments/assets/b9a03038-9b4f-40f6-97cc-5cfd2b763939)
 
+<br>
+## kaggle karnel Overview 
+![image](https://python_study_group.gitbooks.io/python/content/assets/2.png)
+
 # Limitations:
   -  This workflow is a work in progress, we main to automate running workloads in Kaggle resources.
   -  Kaggle AUTH: `Setup your Kaggle Account secrets (KAGGLE_USERNAME, KAGGLE_TOKEN), under Github Action secrets`
