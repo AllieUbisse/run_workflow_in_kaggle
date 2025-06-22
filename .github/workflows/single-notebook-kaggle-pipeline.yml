@@ -64,12 +64,19 @@ jobs:
           kaggle kernels output "$KERNEL_ID"
 
           while true; do
-             STATUS=$(kaggle kernels status "$KERNEL_ID" | grep -i status | awk '{print tolower($2)}')
-             KERNEL_RUN_STATE= $(kaggle kernels status "$KERNEL_ID")
-             echo "⏳ Kernel status: $STATUS : $KERNEL_RUN_STATE"
-             
-             if [[ "$STATUS" == "complete" ]]; then break; fi
-             sleep 5
+            STATUS=$(kaggle kernels status "$KERNEL_ID" | grep -i status | awk '{print tolower($2)}')
+            KERNEL_RUN_STATE=$(kaggle kernels status "$KERNEL_ID")
+            echo "⏳ Kernel status: $STATUS : $KERNEL_RUN_STATE"
+
+            if [[ "$STATUS" == "complete" ]]; then
+              echo "✅ Kernel completed."
+              break
+            elif [[ "$STATUS" == "error" || "$STATUS" == "canceled" ]]; then
+              echo "❌ Kernel failed or was canceled."
+              exit 1
+            fi
+
+            sleep 5
           done
 
           cd - > /dev/null
