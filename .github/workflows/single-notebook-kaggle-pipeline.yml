@@ -68,7 +68,7 @@ jobs:
              echo "⏳ Kernel status: $STATUS"
              if [[ "$STATUS" == "complete" ]]; then break; fi
              sleep 30
-             done
+          done
 
           cd - > /dev/null
         done
