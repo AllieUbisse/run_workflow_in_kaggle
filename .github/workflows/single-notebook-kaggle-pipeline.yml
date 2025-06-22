@@ -74,10 +74,10 @@ jobs:
 
             echo "⏳ Kernel status: $COMPLETE_STATUS --> $KERNEL_LINE"
 
-            if [[ "$COMPLETE_STATUS" == "COMPLETE" ]]; then
+            if [[ $COMPLETE_STATUS == "COMPLETE" ]]; then
               echo "✅ Kernel completed."
               break
-            elif [[ ERROR_STATUS == "ERROR" || $CANCELED_STATUS == "CANCELED" ]]; then
+            elif [[ $ERROR_STATUS == "ERROR" || $CANCELED_STATUS == "CANCELED" ]]; then
               echo "❌ Kernel failed or was canceled."
               exit 1
             fi
