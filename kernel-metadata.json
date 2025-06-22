@@ -1,7 +1,7 @@
 
 {
   "id": "your_username/run-workflow-in-kaggle",
-  "title": "My Auto-Run Kernel",
+  "title": "run workflow in kaggle",
   "code_file": "main.ipynb",
   "language": "python",
   "kernel_type": "notebook",
