@@ -52,8 +52,8 @@ jobs:
           jq --arg title "$TITTLE_ID" '.title = $title' kernel-metadata.json > tmp && mv tmp kernel-metadata.json
 
           # Push and run
-          kaggle kernels push --quiet
-          kaggle kernels output "$KERNEL_ID" --wait --quiet
+          kaggle kernels push 
+          kaggle kernels output "$KERNEL_ID"
 
           cd - > /dev/null
         done
