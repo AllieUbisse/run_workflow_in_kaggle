@@ -65,23 +65,16 @@ jobs:
           
           # KERNEL STATUS CHECK
           while true; do
-            COMPLETE_STATUS=$(kaggle kernels status "$KERNEL_ID" | grep -i "COMPLETE")
-            CANCELED_STATUS=$(kaggle kernels status "$KERNEL_ID" | grep -i "CANCELED")
-            ERROR_STATUS=$(kaggle kernels status "$KERNEL_ID" | grep -i "ERROR")
+            STATUS=$(kaggle kernels status "$KERNEL_ID" | grep -i "COMPLETE")
             KERNEL_LINE=$(kaggle kernels status "$KERNEL_ID")
 
 
 
-            echo "⏳ Kernel status: $COMPLETE_STATUS --> $KERNEL_LINE"
+            echo "⏳ Kernel status: $STATUS --> $KERNEL_LINE"
 
-            if [[ $COMPLETE_STATUS == "COMPLETE" ]]; then
+            if [[ "$STATUS" == "COMPLETE" ]]; then
               echo "✅ Kernel completed."
               break
-            elif [[ $ERROR_STATUS == "ERROR" || $CANCELED_STATUS == "CANCELED" ]]; then
-              echo "❌ Kernel failed or was canceled."
-              exit 1
-            fi
-
             sleep 5
           done
 
