@@ -1,0 +1,15 @@
+{
+  "id": "your_username/inference",
+  "title": "Inference Stage (TPU)",
+  "code_file": "inference.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_tpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "your_username/config",
+    "your_username/curated-data",
+    "your_username/trained-model"
+  ]
+}

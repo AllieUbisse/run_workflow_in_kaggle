@@ -1,0 +1,14 @@
+{
+  "id": "your_username/data-preprocessing",
+  "title": "Data Preprocessing Stage",
+  "code_file": "data_preprocessing.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "dataset_sources": [
+    "your_username/raw-data",
+    "your_username/config"
+  ]
+}

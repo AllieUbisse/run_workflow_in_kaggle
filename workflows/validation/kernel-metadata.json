@@ -1,0 +1,15 @@
+{
+  "id": "your_username/validation",
+  "title": "Validation Stage (TPU)",
+  "code_file": "validation.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_tpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "your_username/config",
+    "your_username/curated-data",
+    "your_username/trained-model"
+  ]
+}

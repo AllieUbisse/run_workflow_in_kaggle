@@ -1,0 +1,14 @@
+{
+  "id": "your_username/model-training",
+  "title": "Model Training Stage (TPU)",
+  "code_file": "model_training.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": true,
+  "enable_tpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "your_username/config",
+    "your_username/curated-data"
+  ]
+}
