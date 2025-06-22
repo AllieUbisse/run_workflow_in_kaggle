@@ -68,6 +68,7 @@ jobs:
             echo "⏳ Kernel status: $KERNEL_STATUS --> $KERNEL_LINE"
 
             if [[ "${KERNEL_STATUS}" == "COMPLETE" ]]; then break; fi
+            if [[ "${KERNEL_STATUS}" == "ERROR" ]]; then break; fi
             sleep 5
           done
 
