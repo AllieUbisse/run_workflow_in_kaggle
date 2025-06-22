@@ -8,6 +8,9 @@ jobs:
   kaggle-pipeline:
     runs-on: ubuntu-latest
 
+    env:
+      STAGES: data_preprocesing
+      
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
@@ -17,8 +20,9 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: Install Kaggle CLI
-      run: pip install kaggle
+    - name: Install Dependencies [Kaggle CLI] [jq]  
+      run: |
+        pip install kaggle jq
 
     - name: Configure Kaggle Credentials
       run: |
@@ -28,14 +32,37 @@ jobs:
 
     - name: Upload Dataset
       run: |
-        kaggle datasets create -p ./data --quiet
-
-    - name: Push Notebook
+        kaggle datasets create -p ./data
+        
+    - name: Generate Unique Run ID
+      id: generate_id
       run: |
-        echo $PWD
-        kaggle kernels push 
-
-    - name: Trigger Notebook Run
+        TIMESTAMP=$(date +%Y%m%d%H%M%S)
+        HASH=$(echo "$TIMESTAMP" | md5sum | cut -c1-6)
+        echo "run_id=${TIMESTAMP}-${HASH}" >> $GITHUB_OUTPUT
+        
+    - name: Push & Trigger Notebook on remote server [kaggle]
       run: |
-        echo "${{ secrets.KAGGLE_USERNAME }}/run-workflow-in-kaggle"
-        kaggle kernels output "${{ secrets.KAGGLE_USERNAME }}/run-workflow-in-kaggle" --wait 
+        for STAGE in $STAGES; do
+          echo "🔧 Processing stage: $STAGE"
+          cd workflows/$STAGE
+          echo "📌 Current Working Dir: $PWD"
+          
+          # Generate dynamic kernel [RUN ID]
+          KERNEL_ID="${{ secrets.KAGGLE_USERNAME }}/${STAGE}-pipeline-${{ steps.generate_id.outputs.run_id }}"
+          TITTLE_ID="${STAGE}-pipeline-${{ steps.generate_id.outputs.run_id }}"
+          ENABLE_TPU="false"
+          echo "📌 Kernel ID: $KERNEL_ID, TITTLE_ID: $TITTLE_ID"
+
+          # Inject dynamic ID into metadata
+          jq --arg id "$KERNEL_ID" '.id = $id' kernel-metadata.json > tmp && mv tmp kernel-metadata.json
+          jq --arg title "$TITTLE_ID" '.title = $title' kernel-metadata.json > tmp && mv tmp kernel-metadata.json
+          jq --arg enable_tpu "$ENABLE_TPU" '.enable_tpu = $enable_tpu' kernel-metadata.json > tmp && mv tmp kernel-metadata.json
+          
+          # Push and run
+          kaggle kernels push 
+          kaggle kernels output "$KERNEL_ID"
+
+          cd - > /dev/null
+        done
+
