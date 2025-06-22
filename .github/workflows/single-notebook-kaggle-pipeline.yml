@@ -66,9 +66,11 @@ jobs:
           
           # KERNEL STATUS CHECK
           while true; do
+            KERNEL_STATUS=$(kaggle kernels status "$KERNEL_ID" | grep -i "COMPLETE")
             KERNEL_LINE=$(kaggle kernels status "$KERNEL_ID" | grep -i "COMPLETE")
             echo "⏳ Kernel status: $KERNEL_LINE"
-            
+        
+            if [[ "$KERNEL_LINE" == "complete" ]]; then break; fi
             spleep 5
           done
           
