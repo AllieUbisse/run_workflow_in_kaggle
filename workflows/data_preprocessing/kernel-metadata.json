@@ -8,7 +8,6 @@
   "enable_tpu": false,
   "enable_internet": true,
   "dataset_sources": [
-    "your_username/raw-data",
-    "your_username/config"
+
   ]
 }
