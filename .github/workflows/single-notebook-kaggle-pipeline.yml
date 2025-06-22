@@ -45,6 +45,7 @@ jobs:
     - name: Push and Run Kernels
       run: |
         for STAGE in $STAGES; do
+
           echo "🔧 Processing stage: $STAGE"
           cd workflows/$STAGE
           
@@ -78,4 +79,4 @@ jobs:
 
           
           cd - > /dev/null
-
+        done
