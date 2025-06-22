@@ -70,7 +70,7 @@ jobs:
             KERNEL_LINE=$(kaggle kernels status "$KERNEL_ID")
             echo "⏳ Kernel status: $KERNEL_LINE"
         
-            if [[ "$KERNEL_LINE" == "complete" ]]; then break; fi
+            if [[ "$KERNEL_LINE" == "COMPLETE" ]]; then break; fi
             spleep 5
           done
           
