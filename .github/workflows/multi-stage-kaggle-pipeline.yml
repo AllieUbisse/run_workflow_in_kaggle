@@ -40,7 +40,7 @@ jobs:
       run: |
         for STAGE in $STAGES; do
           echo "🔧 Processing stage: $STAGE"
-          cd workflows$STAGE
+          cd workflows/$STAGE
           echo "PWD: $PWD"
           
           # Generate dynamic kernel ID
