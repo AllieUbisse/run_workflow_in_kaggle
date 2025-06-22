@@ -1,6 +1,6 @@
 
 {
-  "id": "your_username/my-kaggle-kernel",
+  "id": "your_username/run-workflow-in-kaggle",
   "title": "My Auto-Run Kernel",
   "code_file": "main.ipynb",
   "language": "python",
@@ -8,5 +8,5 @@
   "is_private": true,
   "enable_gpu": true,
   "enable_internet": true,
-  "dataset_sources": ["your_username/my-kaggle-dataset"]
+  "dataset_sources": ["your_username/run-workflow-in-kaggle"]
 }
