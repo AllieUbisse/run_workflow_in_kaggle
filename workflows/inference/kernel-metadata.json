@@ -8,8 +8,6 @@
   "enable_tpu": true,
   "enable_internet": true,
   "dataset_sources": [
-    "your_username/config",
-    "your_username/curated-data",
-    "your_username/trained-model"
+
   ]
 }
