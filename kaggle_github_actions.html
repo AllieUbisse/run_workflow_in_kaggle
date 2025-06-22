@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaggle + GitHub Actions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 90%;
+            height: 80vh;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 40px 20px 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #20beff, #1976d2, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+        
+        .integration-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px 60px;
+            height: calc(100% - 180px);
+            position: relative;
+        }
+        
+        .platform {
+            width: 300px;
+            height: 350px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .platform:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .platform-icon {
+            width: 120px;
+            height: 120px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            font-weight: bold;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .kaggle-icon {
+            background: linear-gradient(135deg, #20beff, #1976d2);
+        }
+        
+        .github-icon {
+            background: linear-gradient(135deg, #24292e, #586069);
+        }
+        
+        .platform-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        .platform-desc {
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            padding: 0 20px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .connection {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3), transparent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+        }
+        
+        .connection-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            animation: pulse 2s infinite;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .flow-arrows {
+            position: absolute;
+            top: 50%;
+            left: 25%;
+            right: 25%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+        }
+        
+        .flow-arrows::before,
+        .flow-arrows::after {
+            content: '';
+            position: absolute;
+            top: -8px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid rgba(255,255,255,0.6);
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+        }
+        
+        .flow-arrows::before {
+            left: 30%;
+            animation: slideRight 2s infinite;
+        }
+        
+        .flow-arrows::after {
+            right: 30%;
+            transform: rotate(180deg);
+            animation: slideLeft 2s infinite;
+        }
+        
+        @keyframes slideRight {
+            0%, 100% { opacity: 0; transform: translateX(-20px); }
+            50% { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes slideLeft {
+            0%, 100% { opacity: 0; transform: rotate(180deg) translateX(-20px); }
+            50% { opacity: 1; transform: rotate(180deg) translateX(0); }
+        }
+        
+        .features {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .feature-tag {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            padding: 8px 16px;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-tag:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .floating-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 6s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .integration-flow {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .platform {
+                width: 250px;
+                height: 280px;
+            }
+            
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .flow-arrows {
+                display: none;
+            }
+            
+            .connection {
+                position: relative;
+                margin: 20px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="floating-particles" id="particles"></div>
+        
+        <div class="header">
+            <h1 class="title">Kaggle + GitHub Actions</h1>
+            <p class="subtitle">
+                <strong>Perfect for ML competitions, reproducibility, or building real-world pipelines using Kaggle as your compute backend.</strong> 
+                Ready to level up your MLOps with just a repo and a click?
+            </p>
+        </div>
+        
+        <div class="integration-flow">
+            <div class="platform">
+                <div class="platform-icon github-icon">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                </div>
+                <h2 class="platform-name">GitHub Actions</h2>
+                <p class="platform-desc">Automated CI/CD workflows, version control, and seamless deployment pipelines</p>
+            </div>
+            
+            <div class="connection">
+                <div class="connection-icon">⚡</div>
+            </div>
+            
+            <div class="platform">
+                <div class="platform-icon kaggle-icon">K</div>
+                <h2 class="platform-name">Kaggle</h2>
+                <p class="platform-desc">Free GPU/TPU compute, datasets, and collaborative ML environment</p>
+            </div>
+            
+            <div class="flow-arrows"></div>
+        </div>
+        
+        <div class="features">
+            <div class="feature-tag">ML Competitions</div>
+            <div class="feature-tag">Reproducibility</div>
+            <div class="feature-tag">Pipeline Automation</div>
+            <div class="feature-tag">Free Compute</div>
+            <div class="feature-tag">Version Control</div>
+        </div>
+    </div>
+    
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                container.appendChild(particle);
+            }
+        }
+        
+        // Add hover effects
+        document.querySelectorAll('.platform').forEach(platform => {
+            platform.addEventListener('mouseenter', () => {
+                platform.style.transform = 'translateY(-15px) scale(1.05)';
+            });
+            
+            platform.addEventListener('mouseleave', () => {
+                platform.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+        
+        // Initialize
+        createParticles();
+        
+        // Add click effects
+        document.addEventListener('click', (e) => {
+            const ripple = document.createElement('div');
+            ripple.style.position = 'absolute';
+            ripple.style.width = '20px';
+            ripple.style.height = '20px';
+            ripple.style.background = 'rgba(255, 255, 255, 0.5)';
+            ripple.style.borderRadius = '50%';
+            ripple.style.left = e.clientX - 10 + 'px';
+            ripple.style.top = e.clientY - 10 + 'px';
+            ripple.style.pointerEvents = 'none';
+            ripple.style.animation = 'rippleEffect 0.6s ease-out forwards';
+            
+            document.body.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+        
+        // Add ripple effect CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes rippleEffect {
+                0% {
+                    transform: scale(0);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
