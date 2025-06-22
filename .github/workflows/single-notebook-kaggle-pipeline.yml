@@ -65,9 +65,11 @@ jobs:
 
           while true; do
              STATUS=$(kaggle kernels status "$KERNEL_ID" | grep -i status | awk '{print tolower($2)}')
-             echo "⏳ Kernel status: $STATUS"
+             KERNEL_RUN_STATE= $(kaggle kernels status "$KERNEL_ID")
+             echo "⏳ Kernel status: $STATUS : $KERNEL_RUN_STATE"
+             
              if [[ "$STATUS" == "complete" ]]; then break; fi
-             sleep 30
+             sleep 5
           done
 
           cd - > /dev/null
