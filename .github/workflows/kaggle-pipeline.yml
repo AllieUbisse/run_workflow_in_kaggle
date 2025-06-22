@@ -32,7 +32,7 @@ jobs:
 
     - name: Push Notebook
       run: |
-        cd project
+        echo $PWD
         kaggle kernels push 
 
     - name: Trigger Notebook Run
