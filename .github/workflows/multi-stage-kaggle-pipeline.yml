@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      STAGES: train validation inference
+      STAGES: data_preprocessing train validation inference
 
     steps:
     - name: Checkout Repository
@@ -41,18 +41,19 @@ jobs:
         for STAGE in $STAGES; do
           echo "🔧 Processing stage: $STAGE"
           cd workflows/$STAGE
-          echo "PWD: $PWD"
           
           # Generate dynamic kernel ID
           KERNEL_ID="${{ secrets.KAGGLE_USERNAME }}/${STAGE}-pipeline-${{ steps.generate_id.outputs.run_id }}"
+          TITTLE_ID="${STAGE}-pipeline-${{ steps.generate_id.outputs.run_id }}"
           echo "📌 Kernel ID: $KERNEL_ID"
 
           # Inject dynamic ID into metadata
           jq --arg id "$KERNEL_ID" '.id = $id' kernel-metadata.json > tmp && mv tmp kernel-metadata.json
+          jq --arg title "$TITTLE_ID" '.title = $title' kernel-metadata.json > tmp && mv tmp kernel-metadata.json
 
           # Push and run
-          kaggle kernels push 
-          kaggle kernels output "$KERNEL_ID" --wait
+          kaggle kernels push --quiet
+          kaggle kernels output "$KERNEL_ID" --wait --quiet
 
           cd - > /dev/null
         done
