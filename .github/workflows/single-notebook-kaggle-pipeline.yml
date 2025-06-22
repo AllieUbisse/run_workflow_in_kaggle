@@ -65,14 +65,14 @@ jobs:
           
           # KERNEL STATUS CHECK
           while true; do
-            STATUS=$(kaggle kernels status "$KERNEL_ID" | grep -i "^KernelWorkerStatus\." | awk -F'.' '{print tolower($2)}')
+            STATUS=$(kaggle kernels status "$KERNEL_ID" | grep -i "^KernelWorkerStatus\." | awk -F'.' '{print $2}')
             KERNEL_LINE=$(kaggle kernels status "$KERNEL_ID")
 
 
 
             echo "⏳ Kernel status: $STATUS --> $KERNEL_LINE"
 
-            if [[ "$STATUS" == "complete" ]]; then
+            if [[ "$STATUS" == "COMPLETE" ]]; then
               echo "✅ Kernel completed."
               break
             elif [[ "$STATUS" == "error" || "$STATUS" == "canceled" ]]; then
