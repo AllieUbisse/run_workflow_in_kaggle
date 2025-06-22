@@ -37,4 +37,4 @@ jobs:
 
     - name: Trigger Notebook Run
       run: |
-        kaggle kernels output "${{ secrets.KAGGLE_USERNAME }}/run_workflow_in_kaggle" --wait --quiet
+        kaggle kernels output "${{ secrets.KAGGLE_USERNAME }}/run-workflow-in-kaggle" --wait --quiet
