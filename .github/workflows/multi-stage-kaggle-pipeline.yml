@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      STAGES: preprocessing train validation inference
+      STAGES: train validation inference
 
     steps:
     - name: Checkout Repository
