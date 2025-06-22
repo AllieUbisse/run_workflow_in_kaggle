@@ -76,6 +76,7 @@ jobs:
               echo "✅ Kernel completed."
               break
             sleep 5
+            
           done
 
           cd - > /dev/null
