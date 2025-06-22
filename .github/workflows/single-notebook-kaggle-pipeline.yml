@@ -70,7 +70,7 @@ jobs:
 
 
 
-            echo "⏳ Kernel status: $STATUS" --> $KERNEL_LINE
+            echo "⏳ Kernel status: $STATUS --> $KERNEL_LINE"
 
             if [[ "$STATUS" == "complete" ]]; then
               echo "✅ Kernel completed."
