@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      STAGES: data_preprocesing
+      STAGES: data_preprocessing
 
     steps:
     - name: Checkout Repository
