@@ -55,7 +55,7 @@ jobs:
           
           # Push and run
           kaggle kernels push 
-          kaggle kernels output "$KERNEL_ID" --wait
+          kaggle kernels output "$KERNEL_ID"
 
           cd - > /dev/null
         done
