@@ -29,6 +29,10 @@ jobs:
         echo "{\"username\":\"${{ secrets.KAGGLE_USERNAME }}\",\"key\":\"${{ secrets.KAGGLE_KEY }}\"}" > ~/.kaggle/kaggle.json
         chmod 600 ~/.kaggle/kaggle.json
 
+    - name: Upload Dataset
+      run: |
+        kaggle datasets create -p ./data
+
     - name: Generate Unique Run ID
       id: generate_id
       run: |
