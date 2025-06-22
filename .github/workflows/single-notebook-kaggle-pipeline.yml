@@ -68,13 +68,12 @@ jobs:
             STATUS=$(kaggle kernels status "$KERNEL_ID" | grep -i "COMPLETE")
             KERNEL_LINE=$(kaggle kernels status "$KERNEL_ID")
 
-
-
             echo "⏳ Kernel status: $STATUS --> $KERNEL_LINE"
 
             if [[ "$STATUS" == "COMPLETE" ]]; then
               echo "✅ Kernel completed."
               break
+            
             sleep 5
 
           
