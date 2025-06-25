@@ -9,6 +9,11 @@ jobs:
   kaggle-pipeline:
     runs-on: ubuntu-latest
 
+    # Use Kaggle's official GPU Docker container
+    container:
+      image: gcr.io/kaggle-images/python:latest
+      options: --gpus all --shm-size=2gb
+
     env:
       STAGES: preprocessing
       WORKFLOW_PATH: workflows
