@@ -51,11 +51,15 @@ jobs:
           cd $WORKFLOW_PATH/$STAGE
           
           # Generate dynamic kernel ID
-          SCRIPT_FILE="$(cat kernel-metadata.json | jq .code_file)"
-          TITTLE_ID="${SCRIPT_FILE}-${STAGE}-pipeline-${{ steps.generate_id.outputs.run_id }}"
+          KERNEL_TYPE="$(cat kernel-metadata.json | jq .kernel_type)"
+          SCRIPT_FILENAME="$(cat kernel-metadata.json | jq -r '.code_file' | cut -d '.' -f 1)"
+          TITTLE_ID="${SCRIPT_FILENAME}-${STAGE}-pipeline-${{ steps.generate_id.outputs.run_id }}"
           KERNEL_ID="${{ secrets.KAGGLE_USERNAME }}/${TITTLE_ID}"
           
-          echo "📌 Kernel ID: $KERNEL_ID"
+          echo "📌 RUNNING ON
+                   KERNEL_TYPE:  $KERNEL_TYPE 
+                   KERNEL_ID: $KERNEL_ID
+               "
 
           # Inject dynamic ID into metadata
           jq --arg id "$KERNEL_ID" '.id = $id' kernel-metadata.json > tmp && mv tmp kernel-metadata.json
