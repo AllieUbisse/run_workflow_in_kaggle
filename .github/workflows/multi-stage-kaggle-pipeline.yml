@@ -49,7 +49,6 @@ jobs:
           # Generate dynamic kernel ID
           KERNEL_ID="${{ secrets.KAGGLE_USERNAME }}/${STAGE}-pipeline-${{ steps.generate_id.outputs.run_id }}"
           TITTLE_ID="${STAGE}-pipeline-${{ steps.generate_id.outputs.run_id }}"
-          ENABLE_TPU="false"
           echo "📌 Kernel ID: $KERNEL_ID"
 
           # Inject dynamic ID into metadata
