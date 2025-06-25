@@ -11,6 +11,7 @@ jobs:
 
     env:
       STAGES: preprocessing
+      WORKFLOW_PATH: workflows
 
     steps:
     - name: Checkout Repository
@@ -47,18 +48,19 @@ jobs:
         for STAGE in $STAGES; do
 
           echo "🔧 Processing stage: $STAGE"
-          cd workflows/$STAGE
+          cd WORKFLOW_PATH/$STAGE
           
           # Generate dynamic kernel ID
-          KERNEL_ID="${{ secrets.KAGGLE_USERNAME }}/${STAGE}-pipeline-${{ steps.generate_id.outputs.run_id }}"
-          TITTLE_ID="${STAGE}-pipeline-${{ steps.generate_id.outputs.run_id }}"
-          ENABLE_TPU="false"
+          SCRIPT_FILE="$(cat kernel-metadata.json | jq .code_file)"
+          TITTLE_ID="${SCRIPT_FILE}-${STAGE}-pipeline-${{ steps.generate_id.outputs.run_id }}"
+          KERNEL_ID="${{ secrets.KAGGLE_USERNAME }}/${TITTLE_ID}"
+          
           echo "📌 Kernel ID: $KERNEL_ID"
 
           # Inject dynamic ID into metadata
           jq --arg id "$KERNEL_ID" '.id = $id' kernel-metadata.json > tmp && mv tmp kernel-metadata.json
           jq --arg title "$TITTLE_ID" '.title = $title' kernel-metadata.json > tmp && mv tmp kernel-metadata.json
-          jq --arg enable_tpu "$ENABLE_TPU" '.enable_tpu = $enable_tpu' kernel-metadata.json > tmp && mv tmp kernel-metadata.json
+          
           
           # Push and run
           kaggle kernels push 
