@@ -7,7 +7,7 @@
   "is_private": true,
   "enable_tpu": false,
   "enable_internet": true,
-  "dataset_sources": [
+  "dataset_sources": ["../../run_workflow_in_kaggle/data/"
 
   ]
 }
