@@ -57,13 +57,17 @@ jobs:
           KERNEL_ID="${{ secrets.KAGGLE_USERNAME }}/${TITTLE_ID}"
           
           
-          echo "📌 RUNNING ON
+          echo "📌 RUNNING
+                   TASK_NAME: "$(cat kernel-metadata.json | jq -r '.title')"
+                   -------------------------------------
                    START_TIMESTAMP: $(date +%Y%m%d%H%M%S)
                    KERNEL_RUN_ID: ${{ steps.generate_id.outputs.run_id }}
                    KERNEL_TYPE:  $KERNEL_TYPE
                    KERNEL_NAME:  $TITTLE_ID
                    KERNEL_ID: $KERNEL_ID
-                   
+                   PRIVATE_KERNEL: "$(cat kernel-metadata.json | jq -r '.is_private')"
+                   SCRIPT_FILE_NAME: "$(cat kernel-metadata.json | jq -r '.code_file')"
+                   GPU_ENABLED: "$(cat kernel-metadata.json | jq -r '.enable_tpu')"
                "
 
           # Inject dynamic ID into metadata
