@@ -57,8 +57,10 @@ jobs:
           KERNEL_ID="${{ secrets.KAGGLE_USERNAME }}/${TITTLE_ID}"
           
           echo "📌 RUNNING ON
-                   KERNEL_TYPE:  $KERNEL_TYPE 
+                   KERNEL_TYPE:  $KERNEL_TYPE
+                   KERNEL_NAME:  $TITTLE_ID
                    KERNEL_ID: $KERNEL_ID
+                   KERNEL_RUN_ID: ${{ steps.generate_id.outputs.run_id }}
                "
 
           # Inject dynamic ID into metadata
