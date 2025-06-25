@@ -47,14 +47,28 @@ jobs:
           cd workflows/$STAGE
           
           # Generate dynamic kernel ID
-          KERNEL_ID="${{ secrets.KAGGLE_USERNAME }}/${STAGE}-pipeline-${{ steps.generate_id.outputs.run_id }}"
-          TITTLE_ID="${STAGE}-pipeline-${{ steps.generate_id.outputs.run_id }}"
-          echo "📌 Kernel ID: $KERNEL_ID"
+          KERNEL_TYPE="$(cat kernel-metadata.json | jq .kernel_type)"
+          SCRIPT_FILENAME="$(cat kernel-metadata.json | jq -r '.code_file' | cut -d '.' -f 1)"
+          TITTLE_ID=$(echo "${SCRIPT_FILENAME}-${STAGE}-flow-${{ steps.generate_id.outputs.run_id }}" | sed -E 's/[ _]+/-/g')
+          KERNEL_ID="${{ secrets.KAGGLE_USERNAME }}/${TITTLE_ID}"
+          
+          
+          echo "📌 RUNNING
+                   TASK_NAME: "$(cat kernel-metadata.json | jq -r '.title')"
+                   -------------------------------------
+                   START_TIMESTAMP: $(date +%Y%m%d%H%M%S)
+                   KERNEL_RUN_ID: ${{ steps.generate_id.outputs.run_id }}
+                   KERNEL_TYPE:  $KERNEL_TYPE
+                   KERNEL_NAME:  $TITTLE_ID
+                   KERNEL_ID: $KERNEL_ID
+                   PRIVATE_KERNEL: "$(cat kernel-metadata.json | jq -r '.is_private')"
+                   SCRIPT_FILE_NAME: "$(cat kernel-metadata.json | jq -r '.code_file')"
+                   GPU_ENABLED: "$(cat kernel-metadata.json | jq -r '.enable_tpu')"
+               "
 
           # Inject dynamic ID into metadata
           jq --arg id "$KERNEL_ID" '.id = $id' kernel-metadata.json > tmp && mv tmp kernel-metadata.json
           jq --arg title "$TITTLE_ID" '.title = $title' kernel-metadata.json > tmp && mv tmp kernel-metadata.json
-          jq --arg enable_tpu "$ENABLE_TPU" '.enable_tpu = $enable_tpu' kernel-metadata.json > tmp && mv tmp kernel-metadata.json
           
           # Push and run
           kaggle kernels push 
