@@ -48,7 +48,7 @@ jobs:
         for STAGE in $STAGES; do
 
           echo "🔧 Processing stage: $STAGE"
-          cd WORKFLOW_PATH/$STAGE
+          cd $WORKFLOW_PATH/$STAGE
           
           # Generate dynamic kernel ID
           SCRIPT_FILE="$(cat kernel-metadata.json | jq .code_file)"
