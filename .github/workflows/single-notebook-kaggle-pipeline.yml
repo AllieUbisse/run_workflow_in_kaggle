@@ -39,7 +39,7 @@ jobs:
     - name: Generate Unique Run ID
       id: generate_id
       run: |
-        TIMESTAMP: $(date +%Y%m%d%H%M%S)
+        TIMESTAMP=$(date +%Y%m%d%H%M%S)
         HASH=$(echo "$TIMESTAMP" | md5sum | cut -c1-6)
         echo "run_id=${HASH}" >> $GITHUB_OUTPUT
 
