@@ -1,5 +1,52 @@
 {
-  "title": "My Dataset Upload",
-  "id": "your_username/my-kaggle-dataset",
-  "licenses": [{"name": "CC0-1.0"}]
+  "title": "Full Dataset for Machine Learning Analysis",
+  "id": "your-username/full-dataset-ml-analysis",
+  "licenses": [
+    {
+      "name": "CC0-1.0"
+    }
+  ],
+  "keywords": [
+    "machine learning",
+    "data science",
+    "analysis",
+    "preprocessing",
+    "training data"
+  ],
+  "collaborators": [],
+  "data": [
+    {
+      "description": "Complete dataset in Parquet format containing all features and target variables for machine learning analysis",
+      "name": "full_dataset.parquet",
+      "totalBytes": 0,
+      "columns": [
+        {
+          "name": "record_id",
+          "description": "Description of record_id",
+          "type": "string"
+        },
+        {
+          "name": "question", 
+          "description": "Description of question",
+          "type": "string"
+        },
+        {
+          "name": "response",
+          "description": "Target variable for prediction",
+          "type": "string"
+        },
+        {
+          "name": "is_human",
+          "description": "Description variable for predicted value",
+          "type": "boolen"
+        }
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "path": "full_dataset.parquet",
+      "description": "Main dataset file"
+    }
+  ]
 }
