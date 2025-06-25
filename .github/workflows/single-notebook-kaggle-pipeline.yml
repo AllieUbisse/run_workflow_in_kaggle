@@ -53,7 +53,7 @@ jobs:
           # Generate dynamic kernel ID
           KERNEL_TYPE="$(cat kernel-metadata.json | jq .kernel_type)"
           SCRIPT_FILENAME="$(cat kernel-metadata.json | jq -r '.code_file' | cut -d '.' -f 1)"
-          TITTLE_ID=$(echo "${SCRIPT_FILENAME}-${STAGE}-flow" | sed -E 's/[ _]+/-/g')
+          TITTLE_ID=$(echo "${SCRIPT_FILENAME}-${STAGE}-flow-${{ steps.generate_id.outputs.run_id }}" | sed -E 's/[ _]+/-/g')
           KERNEL_ID="${{ secrets.KAGGLE_USERNAME }}/${TITTLE_ID}"
           
           
