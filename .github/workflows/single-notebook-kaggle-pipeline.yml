@@ -39,9 +39,8 @@ jobs:
     - name: Generate Unique Run ID
       id: generate_id
       run: |
-        TIMESTAMP=$(date +%Y%m%d%H%M%S)
         HASH=$(echo "$TIMESTAMP" | md5sum | cut -c1-6)
-        echo "run_id=${TIMESTAMP}-${HASH}" >> $GITHUB_OUTPUT
+        echo "run_id=${HASH}" >> $GITHUB_OUTPUT
 
     - name: Push and Run Kernels
       run: |
@@ -58,10 +57,12 @@ jobs:
           
           
           echo "📌 RUNNING ON
+                   START_TIMESTAMP: $(date +%Y-%m-%d %H-%M-%S)
+                   KERNEL_RUN_ID: ${{ steps.generate_id.outputs.run_id }}
                    KERNEL_TYPE:  $KERNEL_TYPE
                    KERNEL_NAME:  $TITTLE_ID
                    KERNEL_ID: $KERNEL_ID
-                   KERNEL_RUN_ID: ${{ steps.generate_id.outputs.run_id }}
+                   
                "
 
           # Inject dynamic ID into metadata
