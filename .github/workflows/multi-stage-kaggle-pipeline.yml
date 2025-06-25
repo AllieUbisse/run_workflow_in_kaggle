@@ -38,7 +38,7 @@ jobs:
       run: |
         TIMESTAMP=$(date +%Y%m%d%H%M%S)
         HASH=$(echo "$TIMESTAMP" | md5sum | cut -c1-6)
-        echo "run_id=${TIMESTAMP}-${HASH}" >> $GITHUB_OUTPUT
+        echo "run_id=${HASH}" >> $GITHUB_OUTPUT
 
     - name: Push and Run Kernels
       run: |
