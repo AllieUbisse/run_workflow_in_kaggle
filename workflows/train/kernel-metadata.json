@@ -1,7 +1,7 @@
 {
   "id": "your_username/model-training",
   "title": "Model Training Stage (TPU)",
-  "code_file": "baseline_llm_finetune_v1.ipynb",
+  "code_file": "model_training.ipynb",
   "language": "python",
   "kernel_type": "notebook",
   "is_private": true,
