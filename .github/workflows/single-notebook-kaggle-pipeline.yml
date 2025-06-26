@@ -11,9 +11,9 @@ jobs:
 
     # Use Kaggle's official GPU Docker container
     # gcr.io/kaggle-images/python:latest
-    container:
-      image: gcr.io/kaggle-gpu-images/python:latest
-      options: --gpus all --shm-size=2gb
+    # container:
+       # image: gcr.io/kaggle-gpu-images/python:latest
+       # options: --gpus all --shm-size=2gb
 
     env:
       STAGES: preprocessing
